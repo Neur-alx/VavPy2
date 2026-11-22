@@ -460,35 +460,34 @@ def livePlay(name, type=None, group=None, retry='0', idx=None):
 	infoLabels = {"title": title, "plot": plot_title}
 	o = ListItem(name)
 	log("Spiele %s" % url)
-	# Live-TV laeuft ueber inputstream.ffmpeg. MPEG-TS ist kein Manifest-
-	# Stream und darf daher nicht als HLS/Timeshift deklariert werden.
 	is_mpeg_ts = is_mpeg_ts_url(url)
-	o.setProperty('inputstream', 'inputstream.ffmpeg')
-	o.setProperty('inputstreamaddon', 'inputstream.ffmpeg')
-	o.setProperty('inputstream.ffmpeg.is_realtime_stream', 'true')
-	o.setProperty('inputstream.ffmpeg.open_mode', 'ffmpeg')
+	if headers:
+		url += "|{}".format(headers)
+	o.setPath(url)
+	o.setProperty("IsPlayable", "true")
+	# Live-TV Wiedergabepfade fuer Kodi 18.3:
+	# - HLS (.m3u8) -> inputstream.adaptive mit manifest_type=hls
+	# - MPEG-TS (.ts) -> Kodi 18 native Wiedergabe (kein Inputstream-Add-on noetig)
+	# inputstream.ffmpeg ist KEINE gueltige Add-on-ID in Kodi 18 und darf nicht verwendet werden.
 	if is_mpeg_ts:
-		o.setMimeType('video/mp2t')
+		o.setMimeType("video/mp2t")
+		# Kein inputstreamaddon -> Kodi nutzt internen ffmpegdemuxer für MPEG-TS
 	else:
-		o.setMimeType('application/x-mpegURL')
-		o.setProperty('inputstream.ffmpeg.stream_mode', 'timeshift')
-		o.setProperty('inputstream.ffmpeg.manifest_type', 'hls')
-	o.setProperty('inputstream.ffmpeg.protocol_whitelist','http,https,tcp,tls,crypto')
-	stream_opts = ':'.join(['http_persistent=1','multiple_requests=1','reconnect=1','reconnect_streamed=1','reconnect_delay_max=2','timeout=30000000'])
-	o.setProperty('inputstream.ffmpeg.stream_opts',stream_opts)
-	o.setProperty('inputstream.ffmpeg.user_agent', 'libmpv')
+		o.setProperty("inputstreamaddon", "inputstream.adaptive")
+		o.setProperty("inputstream.adaptive.manifest_type", "hls")
+		o.setMimeType("application/vnd.apple.mpegurl")
+		o.setContentLookup(False)
+		o.setProperty("inputstream.adaptive.stream_headers", "User-Agent=libmpv")
+		o.setProperty("inputstream.adaptive.manifest_headers", "User-Agent=libmpv")
 	if headers:
 		url += "|{}".format(headers)
 	o.setPath(url)
 	o.setProperty("IsPlayable", "true")
 	if tagger:
-		if tagger:
-			info_tag = ListItemInfoTag(o, 'video')
-			info_tag.set_info(infoLabels)
-		else:
-			o.setInfo('video', infoLabels)
+		info_tag = ListItemInfoTag(o, "video")
+		info_tag.set_info(infoLabels)
 	else:
-		o.setInfo('video', infoLabels)
+		o.setInfo("video", infoLabels)
 	set_resolved(o)
 	end()
 	if not live_player:

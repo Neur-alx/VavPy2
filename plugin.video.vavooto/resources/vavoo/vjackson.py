@@ -371,14 +371,25 @@ def get(params):
 			o = ListItem(getInfoLabel("ListItem.Title"))
 			o.setProperty("IsPlayable", "true")
 			if ".m3u8" in streamurl:
-				o.setProperty("inputstream", "inputstream.adaptive")
 				o.setProperty("inputstreamaddon", "inputstream.adaptive")
-				o.setProperty('inputstream.adaptive.config', '{"ssl_verify_peer":false}')
-				if "|" in streamurl: 
+				o.setProperty("inputstream.adaptive.manifest_type", "hls")
+				o.setMimeType("application/vnd.apple.mpegurl")
+				o.setContentLookup(False)
+				if "|" in streamurl:
 					streamurl, headers = streamurl.split("|")
-					o.setProperty('inputstream.adaptive.common_headers', headers)
-					o.setProperty('inputstream.adaptive.stream_headers', headers)
-			o.setPath(streamurl)
+					o.setProperty("inputstream.adaptive.stream_headers", headers)
+					o.setProperty("inputstream.adaptive.manifest_headers", headers)
+				o.setPath(streamurl)
+			elif ".mpd" in streamurl:
+				o.setProperty("inputstreamaddon", "inputstream.adaptive")
+				o.setProperty("inputstream.adaptive.manifest_type", "mpd")
+				o.setMimeType("application/dash+xml")
+				o.setContentLookup(False)
+				if "|" in streamurl:
+					streamurl, headers = streamurl.split("|")
+					o.setProperty("inputstream.adaptive.stream_headers", headers)
+					o.setProperty("inputstream.adaptive.manifest_headers", headers)
+				o.setPath(streamurl)
 			if int(sys.argv[1]) > 0: set_resolved(o)
 			else:
 				from vavoo.player import cPlayer
