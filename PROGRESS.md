@@ -23,7 +23,9 @@ CodeRabbit GitHub App ist auf dem Repo autorisiert.
 - `[agy] 2026-11-26` Bugfix in `vjlive.py`: doppelte URL/Header-Zuweisung entfernt.
 - `[agy] 2026-11-26` Testfix in `test_playback_properties.py`: veraltete `inputstream.ffmpeg`-Assertions korrigiert.
 - `[agy] 2026-11-26` `.coderabbit.yaml` mit Python 2.7 / Kodi 18.9 Instruktionen und deutscher Review-Sprache angelegt.
+- `[agy] 2026-11-26` `.coderabbit.yaml` auf Englisch (`en-US`) und `path_instructions` umgestellt.
 - `[agy] 2026-11-26` CI-Workflow `.github/workflows/vavoo-py2.yml` um `pull_request`-Trigger erweitert.
+- `[agy] 2026-11-26` PR #1 erstellt, CI grün durchgelaufen, CodeRabbit Review erfolgreich initiiert.
 
 ## Offene Punkte / Nächste Schritte
 
