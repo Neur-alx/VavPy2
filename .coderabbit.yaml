@@ -1,0 +1,24 @@
+# yaml-language-server: $schema=https://coderabbit.ai/integrations/schema.v2.json
+language: "de-DE"
+tone_instructions: "Antworte stets auf Deutsch. Sei präzise, konstruktiv und fokussiere auf Bugs und Optimierungen."
+reviews:
+  profile: "chill"
+  request_changes_workflow: false
+  high_level_summary: true
+  poem: false
+  review_status: true
+  collapse_walkthrough: false
+  auto_review:
+    enabled: true
+    drafts: false
+chat:
+  auto_reply: true
+knowledge_base:
+  instructions: |
+    Dieses Repository ist ein dedizierter Port des VAVOO.TO Kodi-Add-ons für Kodi 18.9 Leia und Python 2.7 auf Amlogic S812 / AlexELEC 3.3.3.
+    WICHTIGE REGELN:
+    - Zwingende Python 2.7 Kompatibilität (keine Python 3 Syntax wie f-strings, match/case, type annotations).
+    - Kodi 18.9 Kompatibilität: inputstream.ffmpeg existiert in Kodi 18 NICHT als Add-on-ID.
+    - HLS (.m3u8) nutzt inputstream.adaptive mit manifest_type=hls.
+    - MPEG-TS (.ts) nutzt die native Kodi-Wiedergabe (kein inputstreamaddon).
+    - Achte besonders auf potenzielle Bugs, Memory Leaks, doppelte Zuweisungen und Exception Handling.

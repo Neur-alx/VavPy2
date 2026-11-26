@@ -2,6 +2,8 @@ name: VaVpy2 CI
 on:
   push:
     branches: [kodi18-py2]
+  pull_request:
+    branches: [kodi18-py2]
   workflow_dispatch:
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
