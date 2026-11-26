@@ -95,7 +95,8 @@ vj.livePlay('Ch1')
 assert created, 'ListItem not created'
 it = created[-1]
 print('props:', it.props)
-assert it.props.get('inputstream') == 'inputstream.ffmpeg'
-assert it.props.get('inputstreamaddon') == 'inputstream.ffmpeg'
-assert it.props.get('inputstream.ffmpeg.is_realtime_stream') == 'true'
+assert it.props.get('IsPlayable') == 'true'
+assert it.mime == 'video/mp2t'
+assert it.props.get('inputstreamaddon') is None or it.props.get('inputstreamaddon') == ''
+assert it.props.get('inputstream') != 'inputstream.ffmpeg'
 print('OK playback properties (real code executed)')

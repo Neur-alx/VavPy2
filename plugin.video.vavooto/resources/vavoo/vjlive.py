@@ -479,10 +479,6 @@ def livePlay(name, type=None, group=None, retry='0', idx=None):
 		o.setContentLookup(False)
 		o.setProperty("inputstream.adaptive.stream_headers", "User-Agent=libmpv")
 		o.setProperty("inputstream.adaptive.manifest_headers", "User-Agent=libmpv")
-	if headers:
-		url += "|{}".format(headers)
-	o.setPath(url)
-	o.setProperty("IsPlayable", "true")
 	if tagger:
 		info_tag = ListItemInfoTag(o, "video")
 		info_tag.set_info(infoLabels)

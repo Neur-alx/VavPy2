@@ -1,0 +1,24 @@
+# yaml-language-server: $schema=https://coderabbit.ai/integrations/schema.v2.json
+language: "en-US"
+tone_instructions: "Please respond in English. Be concise, direct, and focus on bugs, clean code, and optimizations."
+reviews:
+  profile: "chill"
+  request_changes_workflow: false
+  high_level_summary: true
+  poem: false
+  review_status: true
+  collapse_walkthrough: false
+  auto_review:
+    enabled: true
+    drafts: false
+  path_instructions:
+    - path: "**"
+      instructions: |
+        - Language: Respond strictly in English.
+        - Mandatory Python 2.7 compatibility (do NOT suggest Python 3 syntax such as f-strings, match/case, or type annotations).
+        - Kodi 18.9 compatibility: inputstream.ffmpeg does NOT exist as an add-on ID in Kodi 18.
+        - HLS (.m3u8) uses inputstream.adaptive with manifest_type=hls.
+        - MPEG-TS (.ts) uses native Kodi playback (no inputstreamaddon).
+        - Focus on bugs, resource/memory leaks, duplicate statements, and error handling.
+chat:
+  auto_reply: true
